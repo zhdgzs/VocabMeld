@@ -63,8 +63,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     testVoiceBtn: document.getElementById('testVoiceBtn'),
 
     // 站点规则
-    blacklistInput: document.getElementById('blacklistInput'),
-    whitelistInput: document.getElementById('whitelistInput'),
+    excludedSitesInput: document.getElementById('excludedSitesInput'),
 
     // 词汇管理
     wordTabs: document.querySelectorAll('.word-tab'),
@@ -377,8 +376,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       });
       
       // 站点规则
-      elements.blacklistInput.value = (result.blacklist || []).join('\n');
-      elements.whitelistInput.value = (result.whitelist || []).join('\n');
+      elements.excludedSitesInput.value = (result.excludedSites || result.blacklist || []).join('\n');
       
       // 发音设置
       elements.ttsRate.value = result.ttsRate || 1.0;
@@ -642,8 +640,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       translationStyle: document.querySelector('input[name="translationStyle"]:checked').value,
       ttsVoice: elements.ttsVoice.value,
       ttsRate: parseFloat(elements.ttsRate.value),
-      blacklist: elements.blacklistInput.value.split('\n').filter(s => s.trim()),
-      whitelist: elements.whitelistInput.value.split('\n').filter(s => s.trim())
+      excludedSites: elements.excludedSitesInput.value.split('\n').filter(s => s.trim())
     };
 
     try {
@@ -661,8 +658,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       elements.apiEndpoint,
       elements.apiKey,
       elements.modelName,
-      elements.blacklistInput,
-      elements.whitelistInput
+      elements.excludedSitesInput
     ];
 
     textInputs.forEach(input => {
@@ -760,6 +756,31 @@ document.addEventListener('DOMContentLoaded', async () => {
     elements.selectedDifficulty.textContent = level;
   }
 
+  // 切换到指定页面
+  function switchToSection(sectionId) {
+    elements.navItems.forEach(n => n.classList.remove('active'));
+    elements.sections.forEach(s => s.classList.remove('active'));
+    
+    const navItem = document.querySelector(`.nav-item[data-section="${sectionId}"]`);
+    const section = document.getElementById(sectionId);
+    
+    if (navItem && section) {
+      navItem.classList.add('active');
+      section.classList.add('active');
+    }
+  }
+
+  // 从 hash 加载页面
+  function loadSectionFromHash() {
+    const hash = window.location.hash.slice(1); // 去掉 #
+    if (hash) {
+      const section = document.getElementById(hash);
+      if (section) {
+        switchToSection(hash);
+      }
+    }
+  }
+
   // 事件绑定
   function bindEvents() {
     // 导航切换
@@ -767,14 +788,16 @@ document.addEventListener('DOMContentLoaded', async () => {
       item.addEventListener('click', (e) => {
         e.preventDefault();
         const section = item.dataset.section;
-
-        elements.navItems.forEach(n => n.classList.remove('active'));
-        elements.sections.forEach(s => s.classList.remove('active'));
-
-        item.classList.add('active');
-        document.getElementById(section).classList.add('active');
+        
+        // 更新 URL hash
+        window.location.hash = section;
+        
+        switchToSection(section);
       });
     });
+    
+    // 监听 hash 变化（浏览器前进后退）
+    window.addEventListener('hashchange', loadSectionFromHash);
 
     // 配置选择器
     elements.apiConfigSelect.addEventListener('change', () => {
@@ -978,4 +1001,16 @@ document.addEventListener('DOMContentLoaded', async () => {
   // 初始化
   bindEvents();
   loadSettings();
+  loadSectionFromHash(); // 从 hash 恢复页面
+
+  // 监听 storage 变化（实时响应其他页面的主题切换）
+  chrome.storage.onChanged.addListener((changes, areaName) => {
+    if (areaName === 'sync' && changes.theme) {
+      const newTheme = changes.theme.newValue;
+      applyTheme(newTheme);
+      elements.themeRadios.forEach(radio => {
+        radio.checked = radio.value === newTheme;
+      });
+    }
+  });
 });

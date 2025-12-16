@@ -307,17 +307,11 @@ input:checked + .toggle-slider:before {
 
 /* Footer */
 .popup-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding-top: 12px;
   border-top: 1px solid var(--border);
-}
-
-.shortcut-tip {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  font-size: 12px;
-  color: var(--text-muted);
 }
 
 kbd {
@@ -328,4 +322,95 @@ kbd {
   font-family: inherit;
   font-size: 11px;
   color: var(--text-secondary);
+}
+
+/* 按钮中的快捷键 */
+.btn-primary kbd {
+  background: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.9);
+  margin-left: 4px;
+}
+
+/* Theme Switch */
+.theme-switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 22px;
+}
+
+.theme-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.theme-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--bg-tertiary);
+  border-radius: 20px;
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4px;
+}
+
+.theme-slider .icon-sun,
+.theme-slider .icon-moon {
+  transition: opacity 0.3s;
+}
+
+.theme-slider .icon-sun {
+  color: var(--warning);
+  opacity: 0.4;
+}
+
+.theme-slider .icon-moon {
+  color: var(--primary-light);
+  opacity: 1;
+}
+
+.theme-switch input:checked + .theme-slider .icon-sun {
+  opacity: 1;
+}
+
+.theme-switch input:checked + .theme-slider .icon-moon {
+  opacity: 0.4;
+}
+
+.theme-switch input:checked + .theme-slider {
+  background: var(--bg-tertiary);
+}
+
+/* Text Button */
+.btn-text {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 6px;
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid var(--border);
+}
+
+.btn-text:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.btn-text.active {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--danger);
+  border-color: rgba(239, 68, 68, 0.3);
 }

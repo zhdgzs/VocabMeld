@@ -129,8 +129,7 @@
           translationStyle: result.translationStyle || 'translation-original',
           theme: result.theme || 'dark',
           enabled: result.enabled ?? true,
-          blacklist: result.blacklist || [],
-          whitelist: result.whitelist || [],
+          excludedSites: result.excludedSites || result.blacklist || [],
           learnedWords: result.learnedWords || [],
           memorizeList: result.memorizeList || []
         };
@@ -1143,10 +1142,10 @@ ${uncached.join(', ')}
     if (isProcessing) return { processed: 0, skipped: true };
     if (!config?.enabled) return { processed: 0, disabled: true };
 
-    // 检查黑名单
+    // 检查排除站点
     const hostname = window.location.hostname;
-    if (config.blacklist?.some(domain => hostname.includes(domain))) {
-      return { processed: 0, blacklisted: true };
+    if (config.excludedSites?.some(domain => hostname.includes(domain))) {
+      return { processed: 0, excluded: true };
     }
 
     // 确保缓存已加载

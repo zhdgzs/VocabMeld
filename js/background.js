@@ -17,7 +17,7 @@ chrome.runtime.onInstalled.addListener((details) => {
       targetLanguage: 'en',
       difficultyLevel: 'B1',
       intensity: 'medium',
-      autoProcess: false,
+      autoProcess: true,
       showPhonetic: true,
       translationStyle: 'translation-original',
       enabled: true,

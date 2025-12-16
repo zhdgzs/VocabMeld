@@ -332,19 +332,13 @@
       <!-- 站点规则 -->
       <section id="sites" class="settings-section">
         <h2>站点规则</h2>
-        <p class="section-desc">设置哪些站点需要或不需要处理</p>
+        <p class="section-desc">设置哪些站点不需要处理</p>
 
         <div class="form-group">
-          <label for="blacklistInput">黑名单（永不处理）</label>
-          <p class="help-text">这些站点将不会进行任何处理，每行一个域名</p>
-          <textarea id="blacklistInput" placeholder="example.com
-another-site.org"></textarea>
-        </div>
-
-        <div class="form-group">
-          <label for="whitelistInput">白名单（始终处理）</label>
-          <p class="help-text">即使关闭自动处理，这些站点也会被处理，每行一个域名</p>
-          <textarea id="whitelistInput" placeholder="learning-site.com"></textarea>
+          <label for="excludedSitesInput">排除站点</label>
+          <p class="help-text">这些站点将不会进行任何处理，每行一个域名（支持部分匹配）</p>
+          <textarea id="excludedSitesInput" placeholder="example.com
+github.com"></textarea>
         </div>
       </section>
 
