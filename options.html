@@ -155,6 +155,34 @@
         </div>
 
         <div class="form-group">
+          <label>处理模式</label>
+          <p class="help-text">选择要处理的网页语言类型</p>
+          <div class="process-mode-selector">
+            <label class="process-mode-option">
+              <input type="radio" name="processMode" value="both" checked>
+              <span class="process-mode-card">
+                <span class="process-mode-icon">🔄</span>
+                <span class="process-mode-name">双向处理</span>
+              </span>
+            </label>
+            <label class="process-mode-option">
+              <input type="radio" name="processMode" value="native-only">
+              <span class="process-mode-card">
+                <span class="process-mode-icon">📤</span>
+                <span class="process-mode-name">仅母语网页</span>
+              </span>
+            </label>
+            <label class="process-mode-option">
+              <input type="radio" name="processMode" value="target-only">
+              <span class="process-mode-card">
+                <span class="process-mode-icon">📥</span>
+                <span class="process-mode-name">仅学习语言</span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
           <label for="difficultyLevel">难度等级 (CEFR)</label>
           <div class="difficulty-selector">
             <input type="range" id="difficultyLevel" min="0" max="5" value="2">

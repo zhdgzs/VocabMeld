@@ -396,6 +396,49 @@ body {
   color: var(--text-muted);
 }
 
+/* Process Mode Selector */
+.process-mode-selector {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.process-mode-option input {
+  display: none;
+}
+
+.process-mode-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 12px;
+  background: var(--bg-secondary);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.process-mode-option input:checked + .process-mode-card {
+  border-color: var(--primary);
+  background: rgba(99, 102, 241, 0.1);
+}
+
+.process-mode-card:hover {
+  border-color: var(--primary-light);
+}
+
+.process-mode-icon {
+  font-size: 24px;
+}
+
+.process-mode-name {
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+}
+
 /* Toggle Group */
 .toggle-group {
   display: flex;

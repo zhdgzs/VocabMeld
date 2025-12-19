@@ -50,6 +50,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     difficultyLevel: document.getElementById('difficultyLevel'),
     selectedDifficulty: document.getElementById('selectedDifficulty'),
     intensityRadios: document.querySelectorAll('input[name="intensity"]'),
+    processModeRadios: document.querySelectorAll('input[name="processMode"]'),
 
     // 行为设置
     autoProcess: document.getElementById('autoProcess'),
@@ -390,6 +391,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         radio.checked = radio.value === intensity;
       });
       
+      const processMode = result.processMode || 'both';
+      elements.processModeRadios.forEach(radio => {
+        radio.checked = radio.value === processMode;
+      });
+      
       // 行为设置
       elements.autoProcess.checked = result.autoProcess ?? false;
       elements.showPhonetic.checked = result.showPhonetic ?? true;
@@ -672,6 +678,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       targetLanguage: elements.targetLanguage.value,
       difficultyLevel: CEFR_LEVELS[elements.difficultyLevel.value],
       intensity: document.querySelector('input[name="intensity"]:checked').value,
+      processMode: document.querySelector('input[name="processMode"]:checked')?.value || 'both',
       autoProcess: elements.autoProcess.checked,
       showPhonetic: elements.showPhonetic.checked,
       showAddMemorize: elements.showAddMemorize.checked,
@@ -737,6 +744,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // 单选按钮 - 改变时保存
     elements.intensityRadios.forEach(radio => {
+      radio.addEventListener('change', () => debouncedSave(200));
+    });
+
+    elements.processModeRadios.forEach(radio => {
       radio.addEventListener('change', () => debouncedSave(200));
     });
 

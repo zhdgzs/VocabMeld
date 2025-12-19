@@ -134,6 +134,7 @@
           targetLanguage: result.targetLanguage || 'en',
           difficultyLevel: result.difficultyLevel || 'B1',
           intensity: result.intensity || 'medium',
+          processMode: result.processMode || 'both',
           autoProcess: result.autoProcess ?? false,
           showPhonetic: result.showPhonetic ?? true,
           showAddMemorize: result.showAddMemorize ?? true,
@@ -597,6 +598,18 @@
 
     const detectedLang = detectLanguage(text);
     const isNative = isNativeLanguage(detectedLang, config.nativeLanguage);
+    
+    // 根据处理模式检查是否需要处理该文本
+    // native-only: 只处理母语网页（将母语翻译为目标语言）
+    // target-only: 只处理目标语言网页（将目标语言翻译为母语）
+    // both: 两者均处理
+    if (config.processMode === 'native-only' && !isNative) {
+      return { immediate: [], async: null };
+    }
+    if (config.processMode === 'target-only' && isNative) {
+      return { immediate: [], async: null };
+    }
+    
     const sourceLang = isNative ? config.nativeLanguage : detectedLang;
     const targetLang = isNative ? config.targetLanguage : config.nativeLanguage;
     const maxReplacements = INTENSITY_CONFIG[config.intensity]?.maxPerParagraph || 8;
@@ -1615,8 +1628,8 @@ ${uncached.join(', ')}
           if (changes.theme) {
             updateUITheme();
           }
-          // 难度、强度或样式变化时，需要重新处理页面
-          if (changes.difficultyLevel || changes.intensity || changes.translationStyle) {
+          // 难度、强度、样式或处理模式变化时，需要重新处理页面
+          if (changes.difficultyLevel || changes.intensity || changes.translationStyle || changes.processMode) {
             restoreAll(); // 先恢复页面（会清除 processedFingerprints）
             if (config.enabled) {
               processPage(); // 重新处理
