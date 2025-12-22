@@ -429,3 +429,22 @@ VocabMeld 尊重您的隐私。以下是我们的数据处理说明：
 ## Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=lzskyline/VocabMeld&type=Date)](https://star-history.com/#lzskyline/VocabMeld&Date)
+
+---
+
+## 开源许可
+
+本项目基于 [MIT License](LICENSE) 开源。
+
+你可以自由地：
+- ✅ 使用、复制、修改、合并、发布、分发本项目
+- ✅ 用于商业用途
+- ✅ 进行二次开发
+
+唯一的要求是：
+- 📝 在你的项目中保留原版权声明和许可证
+
+如果你基于本项目进行了二次开发，欢迎在项目中标注：
+```
+Based on VocabMeld (https://github.com/lzskyline/VocabMeld)
+```
