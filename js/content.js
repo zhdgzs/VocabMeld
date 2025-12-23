@@ -2040,7 +2040,7 @@ ${originalWord}
 
     const rect = element.getBoundingClientRect();
     tooltip.style.left = rect.left + window.scrollX + 'px';
-    tooltip.style.top = rect.bottom + window.scrollY + 5 + 'px';
+    tooltip.style.top = rect.bottom + window.scrollY + 2 + 'px';
     tooltip.style.display = 'block';
     
     // 显示词典数据（优先从缓存获取）
